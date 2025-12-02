@@ -16,13 +16,13 @@ jobs:
       - name: Deploy multi-service app via Docker Compose
         run: |
           echo "Stopping old containers..."
-          docker-compose down
+          docker compose down
 
           echo "Pulling latest Docker Hub images..."
-          docker-compose pull
+          docker compose pull
 
           echo "Starting containers..."
-          docker-compose up -d
+          docker compose up -d
 
           echo "Cleaning up unused images..."
           docker image prune -f
