@@ -1,0 +1,31 @@
+name: Deploy Multi-Service App (Docker Hub Images)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-main:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Deploy multi-service app via Docker Compose
+        run: |
+          echo "Stopping old containers..."
+          docker-compose down
+
+          echo "Pulling latest Docker Hub images..."
+          docker-compose pull
+
+          echo "Starting containers..."
+          docker-compose up -d
+
+          echo "Cleaning up unused images..."
+          docker image prune -f
+
+      - name: List running containers
+        run: docker ps
